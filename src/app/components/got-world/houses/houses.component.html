@@ -1,0 +1,16 @@
+<mat-card>
+  <h2>Name of the house: {{ house.name }}</h2>
+  <p>Region: {{ house.region }}</p>
+  <p>Coat of Arms: {{ house.coatOfArms }}</p>
+  <p>Words: {{ house.words }}</p>
+  <p>Titles: {{ house?.titles.join(',') }}</p>
+  <p>Seats: {{ house?.seats.join(',') }}</p>
+  <p>Has died out: {{ house?.diedOut }}</p>
+  <p>Has overlord: {{ house?.overlord }}</p>
+  <p>Number of Cadet Branches: {{ house?.cadetBranches.length }}</p>
+</mat-card>
+<a routerLink="/characters"
+  ><button mat-flat-button color="primary">
+    Go back to characters page
+  </button></a
+>

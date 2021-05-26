@@ -1,0 +1,73 @@
+<mat-form-field>
+  <mat-label>Filter by culture</mat-label>
+  <input matInput [formControl]="culture" />
+</mat-form-field>
+<mat-form-field appearance="fill">
+  <mat-label>Filter by gender</mat-label>
+  <mat-select [formControl]="gender" name="food">
+    <mat-select-trigger>
+      {{ gender.value }}<mat-icon (click)="gender.setValue('')">close</mat-icon>
+    </mat-select-trigger>
+    <mat-option *ngFor="let gender of genders" [value]="gender">
+      {{ gender }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="tableData">
+    <ng-container matColumnDef="Character">
+      <th mat-header-cell *matHeaderCellDef>Character</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element?.name + ', ' + element?.aliases.concat(',') }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Alive">
+      <th mat-header-cell *matHeaderCellDef>Alive</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.born | alive: element.died }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Gender">
+      <th mat-header-cell *matHeaderCellDef>Gender</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element?.gender || 'Unknown' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Culture">
+      <th mat-header-cell *matHeaderCellDef>Culture</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element?.culture || 'Unknown' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Allegiances">
+      <th mat-header-cell *matHeaderCellDef>Allegiances</th>
+      <td mat-cell *matCellDef="let element">
+        <a
+          *ngFor="let link of element.allegiances"
+          [routerLink]="['/', 'houses', getHouseId(link)]"
+        >
+          {{ getHouseId(link) }},
+        </a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="# of Books">
+      <th mat-header-cell *matHeaderCellDef># of Books</th>
+      <td mat-cell *matCellDef="let element">{{ element.books?.length }}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [length]="resultLength"
+    [pageSizeOptions]="[10, 25, 50]"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
